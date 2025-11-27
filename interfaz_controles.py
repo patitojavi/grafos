@@ -1,16 +1,14 @@
-from typing import List, Callable
 import tkinter as tk
 from tkinter import ttk, StringVar
 
-from datos_viajante import Ciudad 
-
+# Panel ligero de controles para ejecutar los metodos
 
 def crear_panel_controles(
-    master: tk.Misc,
-    ciudades: List[Ciudad],
-    on_ejecutar_exhaustivo: Callable[[], None],
-    on_ejecutar_vecino: Callable[[], None],
-) -> ttk.Frame:
+    master,
+    ciudades,
+    on_ejecutar_exhaustivo,
+    on_ejecutar_vecino,
+):
     frame = ttk.Frame(master, padding=8)
     frame.ciudades = ciudades
 
@@ -67,6 +65,7 @@ def crear_panel_controles(
     )
     etiqueta_gap.pack(side=tk.TOP, pady=(2, 0))
 
+    # Guardar referencias para acceso externo
     frame.boton_exhaustivo = boton_exhaustivo
     frame.etiqueta_tiempo_exhaustivo = etiqueta_tiempo_exhaustivo
     frame.ciudad_inicial = ciudad_inicial
