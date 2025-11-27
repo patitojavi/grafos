@@ -1,4 +1,4 @@
-# grafos
+# Proyecto Final Grafos 
 # Explorador del Problema del Viajante
 
 Aplicación de escritorio escrita en Python que compara dos enfoques para resolver el Problema del Viajante de Comercio (TSP):
