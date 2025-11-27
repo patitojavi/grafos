@@ -69,6 +69,3 @@ El programa abre una ventana titulada **"Problema del Viajante - Exhaustivo vs V
 - Si deseas partir desde otra ciudad, selecciónala en el combo **"Ciudad inicial"** antes de ejecutar el vecino más cercano.
 - Las animaciones pueden detenerse o reiniciarse al volver a ejecutar cada método; el panel de gráficos se limpia y redibuja automáticamente.
 
-## Licencia
-
-Este proyecto se proporciona tal cual para fines educativos y de demostración de algoritmos de búsqueda exacta y heurística aplicados al TSP.
