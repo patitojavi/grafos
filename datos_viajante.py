@@ -1,5 +1,5 @@
 import math
-
+# diccionario de ciudades con sus coordenadas
 TODAS_LAS_CIUDADES = [
     {"nombre": "Temuco", "latitud": -38.7399, "longitud": -72.5901},
     {"nombre": "Loncoche", "latitud": -39.3667, "longitud": -72.6333},
@@ -18,14 +18,15 @@ TODAS_LAS_CIUDADES = [
     {"nombre": "Collipulli", "latitud": -37.95000, "longitud": -72.43333},
 ]
 
+
 def obtener_ciudades(cantidad):
-    if cantidad > len(TODAS_LAS_CIUDADES):
-        return TODAS_LAS_CIUDADES
-    return TODAS_LAS_CIUDADES[:cantidad]
+    if cantidad > len(TODAS_LAS_CIUDADES):  # si pide más ciudades de las disponibles
+        return TODAS_LAS_CIUDADES   # devuelve todas las ciudades
+    return TODAS_LAS_CIUDADES[:cantidad] # si no, devuelve las primeras 'n' ciudades
 
 def crear_matriz_distancias(ciudades):
-    n = len(ciudades)
-    matriz = [[0 for _ in range(n)] for _ in range(n)] # crea una matriz 9x9 de ceros
+    n = len(ciudades) # lee la cantidad de ciudades
+    matriz = [[0.0 for _ in range(n)] for _ in range(n)] # crea una matriz n x n inicializada en 0
     
     coordenadas = [(c["latitud"], c["longitud"]) for c in ciudades] # guarda las coordenadas de cada ciudad
 
@@ -43,31 +44,29 @@ def crear_matriz_distancias(ciudades):
 def crear_instancia_viajante(ciudades):
     matriz = crear_matriz_distancias(ciudades)
     return {
-        "ciudades": ciudades, 
-        "matriz_distancias": matriz
+        "ciudades": ciudades,  # retorna un diccionario con las ciudades
+        "matriz_distancias": matriz # y la matriz de distancias
     }
 
-def longitud_recorrido(instancia, recorrido):
-    if not recorrido:
+def longitud_recorrido(instancia, recorrido): 
+    if not recorrido: # si no hay ciudades la distancia es 0
         return 0.0
 
-    matriz = instancia["matriz_distancias"]
-    distancia_total = 0.0
+    matriz = instancia["matriz_distancias"] # extrae la matriz de distancias
+    distancia_total = 0.0 # contador de distancia total
 
-    # Sumar distancias del camino
-    for i in range(len(recorrido) - 1):
-        origen = recorrido[i]
-        destino = recorrido[i + 1]
-        distancia_total += matriz[origen][destino]
+    for i in range(len(recorrido) - 1): # recorre el recorrido de ciudades
+        origen = recorrido[i] # ciudad actual
+        destino = recorrido[i + 1] # ciudad siguiente
+        distancia_total += matriz[origen][destino] # suma la distancia entre ambas ciudades
 
-    # Sumar vuelta al inicio (ciclo)
-    ultimo = recorrido[-1]
-    primero = recorrido[0]
-    distancia_total += matriz[ultimo][primero]
+    ultimo = recorrido[-1] # última ciudad del recorrido
+    primero = recorrido[0] # primera ciudad del recorrido
+    distancia_total += matriz[ultimo][primero] # suma la distancia de regreso a la ciudad inicial
     
-    return distancia_total
+    return distancia_total # devuelve la distancia total del recorrido
 
-def coordenadas_ciudades(instancia):
-    longitudes = [c["longitud"] for c in instancia["ciudades"]]
+def coordenadas_ciudades(instancia): 
+    longitudes = [c["longitud"] for c in instancia["ciudades"]] 
     latitudes = [c["latitud"] for c in instancia["ciudades"]]
-    return longitudes, latitudes
+    return longitudes, latitudes # devuelve la lista de longitudes y latitudes
