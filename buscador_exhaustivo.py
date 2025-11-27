@@ -1,31 +1,24 @@
 import itertools
 import time
-from typing import List, Tuple
 
-from datos_viajante import (
-    InstanciaViajante,
-    SolucionViajante,
-    total_ciudades,
-    longitud_recorrido,
-    crear_solucion,
-)
+from datos_viajante import longitud_recorrido
 
 MAX_CIUDADES_EXHAUSTIVO = 11
 
-def resolver_exhaustivo_con_traza(
-    instancia: InstanciaViajante,
-) -> Tuple[SolucionViajante, List[List[int]], List[float]]:
-    total = total_ciudades(instancia)
+def resolver_exhaustivo_con_traza(instancia):
+    ciudades = instancia["ciudades"]
+    total = len(ciudades)
+    
     if total > MAX_CIUDADES_EXHAUSTIVO:
-        raise ValueError(
-            f"Búsqueda exhaustiva impracticable para {total} ciudades. "
-            f"Límite configurado: {MAX_CIUDADES_EXHAUSTIVO}."
-        )
-
-    mejor_recorrido: List[int] | None = None
+        # Validación simple
+        raise ValueError(f"Demasiadas ciudades para fuerza bruta ({total}). Máximo {MAX_CIUDADES_EXHAUSTIVO}.")
+    
+    mejor_recorrido = None
     mejor_longitud = float("inf")
-    trazas: List[List[int]] = []
-    longitudes_traza: List[float] = []
+
+    trazas = []
+    
+    longitudes_traza = []
 
     inicio = time.perf_counter()
     nodos = list(range(total))
@@ -41,17 +34,14 @@ def resolver_exhaustivo_con_traza(
             longitudes_traza.append(L)
 
     duracion = time.perf_counter() - inicio
-
-    solucion = crear_solucion(
-        recorrido=mejor_recorrido or [],
-        longitud=mejor_longitud,
-        metodo="exhaustivo",
-        tiempo=duracion,
-    )
-
+    
     print(
         f"[Exhaustivo] ciudades={total}, L*={mejor_longitud:.4f}, "
         f"tiempo={duracion:.4f} s"
     )
 
-    return solucion, trazas, longitudes_traza
+    return {
+            "recorrido": mejor_recorrido,
+            "longitud": mejor_longitud,
+            "tiempo": duracion
+        }, trazas, longitudes_traza
